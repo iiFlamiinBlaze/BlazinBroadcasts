@@ -1,0 +1,13 @@
+name: BlazinBroadcasts
+version: 1.0.0
+main: iiFlamiinBlaze\BlazinBroadcasts\BlazinBroadcasts
+api: [3.0.0-ALPHA7, 3.0.0-ALPHA8, 3.0.0-ALPHA9, 3.0.0-ALPHA10, 3.0.0-ALPHA11, 3.0.0-ALPHA12]
+description: An advanced auto broadcasting plugin for PocketMine
+author: iiFlamiinBlaze
+commands:
+ blazinbroadcasts:
+  description: BlazinBoradcasts config management command
+  permission: blazinbroadcasts.command
+permissions:
+ blazinbroadcasts.command:
+  default: op

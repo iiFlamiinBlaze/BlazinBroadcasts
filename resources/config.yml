@@ -1,0 +1,32 @@
+#  ____  _            _______ _          _____
+# |  _ \| |          |__   __| |        |  __ \
+# | |_) | | __ _ _______| |  | |__   ___| |  | | _____   __
+# |  _ <| |/ _` |_  / _ \ |  | '_ \ / _ \ |  | |/ _ \ \ / /
+# | |_) | | (_| |/ /  __/ |  | | | |  __/ |__| |  __/\ V /
+# |____/|_|\__,_/___\___|_|  |_| |_|\___|_____/ \___| \_/
+
+# BlazinFly Configuration File:
+#  Variables:
+#   - & for color coding
+#   - {line} for a new line
+#   - {max_players} for the max players of the server
+#   - {online_players} for the online player count
+#   - {tps} for the ticks per second of the server
+#   - {motd} for the message of the day
+#  Default Config:
+#    prefix: "&bBlazinBroadcasts &6> "
+#    message_interval: 60
+#    messages:
+#     - "&bBlazinBroadcasts &aby &6BlazeTheDev"
+#     - "2nd Message"
+
+# The below config message will show up before the messages declared below (NOTE: You can use & for color coding but none of the other variables described above)
+prefix: "&bBlazinBroadcasts &6> "
+
+# The below config is the number of seconds in between each message
+message_interval: 60
+
+# The below config are the messages that will be sent in-game (NOTE: You can use any of the variables that are described above)
+messages:
+ - "&bBlazinBroadcasts &aby &6BlazeTheDev"
+ - "2nd Message"
