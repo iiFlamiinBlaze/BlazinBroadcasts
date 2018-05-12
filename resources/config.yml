@@ -16,9 +16,13 @@
 #  Default Config:
 #    prefix: "&bBlazinBroadcasts &6> "
 #    message_interval: 60
+#    command_interval: 60
 #    messages:
 #     - "&bBlazinBroadcasts &aby &6BlazeTheDev"
 #     - "2nd Message"
+#    commands:
+#     - "say Hi this is BlazinBroadcasts testing commands"
+#     - "me Hi this is BlazinBroadcasts testing commands"
 
 # The below config message will show up before the messages declared below (NOTE: You can use & for color coding but none of the other variables described above)
 prefix: "&bBlazinBroadcasts &6> "
@@ -26,7 +30,15 @@ prefix: "&bBlazinBroadcasts &6> "
 # The below config is the number of seconds in between each message
 message_interval: 60
 
+# The below config is the number of seconds in between all of the commands running
+command_interval: 60
+
 # The below config are the messages that will be sent in-game (NOTE: You can use any of the variables that are described above)
 messages:
  - "&bBlazinBroadcasts &aby &6BlazeTheDev"
  - "2nd Message"
+
+# The below config are the commands that will run at the interval you set (NOTE: Do not use a / before these commands)
+commands:
+ - "say Hi this is BlazinBroadcasts testing commands"
+ - "me Hi this is BlazinBroadcasts testing commands"

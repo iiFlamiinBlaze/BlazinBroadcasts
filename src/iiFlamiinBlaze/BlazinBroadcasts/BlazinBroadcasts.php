@@ -29,7 +29,7 @@ use pocketmine\utils\TextFormat;
 
 class BlazinBroadcasts extends PluginBase{
 
-    const VERSION = "v1.0.0";
+    const VERSION = "v1.0.1";
     const PREFIX = TextFormat::AQUA . "BlazinBroadcasts" . TextFormat::GOLD . " > ";
 
     /** @var self $instance */
@@ -40,14 +40,26 @@ class BlazinBroadcasts extends PluginBase{
         $this->getLogger()->info("BlazinBroadcasts " . self::VERSION . " by iiFlamiinBlaze is enabled");
         @mkdir($this->getDataFolder());
         $this->saveDefaultConfig();
-        $this->integerCheck();
+        $this->messageIntegerCheck();
+        $this->commandIntegerCheck();
     }
 
-    private function integerCheck() : bool{
+    private function messageIntegerCheck() : bool{
         if(is_integer($this->getConfig()->get("message_interval"))){
             $this->getServer()->getScheduler()->scheduleRepeatingTask(new BroadcastTask($this), $this->getConfig()->get("message_interval") * 20);
         }else{
             $this->getLogger()->error(TextFormat::RED . "Please enter an integer for the message interval! Plugin Disabling...");
+            $this->getPluginLoader()->disablePlugin($this);
+            return false;
+        }
+        return true;
+    }
+
+    private function commandIntegerCheck() : bool{
+        if(is_integer($this->getConfig()->get("command_interval"))){
+            $this->getServer()->getScheduler()->scheduleRepeatingTask(new CommandTask($this), $this->getConfig()->get("command_interval") * 20);
+        }else{
+            $this->getLogger()->error(TextFormat::RED . "Please enter an integer for the command interval! Plugin Disabling...");
             $this->getPluginLoader()->disablePlugin($this);
             return false;
         }
@@ -65,7 +77,7 @@ class BlazinBroadcasts extends PluginBase{
                 return false;
             }
             if(empty($args)){
-                $sender->sendMessage(self::PREFIX . TextFormat::GRAY . "Usage: /blazinbroadcasts <info | set | reload> <interval | prefix> <message>");
+                $sender->sendMessage(self::PREFIX . TextFormat::GRAY . "Usage: /blazinbroadcasts <info | set | reload> <messageinterval | commandinterval | prefix> <message>");
                 return false;
             }
             switch($args[0]){
@@ -79,11 +91,21 @@ class BlazinBroadcasts extends PluginBase{
                     break;
                 case "set":
                     switch($args[1]){
-                        case "interval":
+                        case "messageinterval":
                             if(is_integer((int)$args[2])){
                                 $this->getConfig()->set("message_interval", (int)$args[2]);
                                 $this->getConfig()->save();
-                                $sender->sendMessage(self::PREFIX . TextFormat::GREEN . "You have set the interval successfully to $args[2]");
+                                $sender->sendMessage(self::PREFIX . TextFormat::GREEN . "You have set the message interval successfully to $args[2]");
+                            }else{
+                                $sender->sendMessage(self::PREFIX . TextFormat::RED . "Please enter an integer to set the interval too");
+                                return false;
+                            }
+                            break;
+                        case "commandinterval":
+                            if(is_integer((int)$args[2])){
+                                $this->getConfig()->set("command_interval", (int)$args[2]);
+                                $this->getConfig()->save();
+                                $sender->sendMessage(self::PREFIX . TextFormat::GREEN . "You have set the command interval successfully to $args[2]");
                             }else{
                                 $sender->sendMessage(self::PREFIX . TextFormat::RED . "Please enter an integer to set the interval too");
                                 return false;
@@ -100,7 +122,7 @@ class BlazinBroadcasts extends PluginBase{
                             }
                             break;
                         default:
-                            $sender->sendMessage(self::PREFIX . TextFormat::GRAY . "Usage: /blazinbroadcasts <info | set | reload> <interval | prefix> <message>");
+                            $sender->sendMessage(self::PREFIX . TextFormat::GRAY . "Usage: /blazinbroadcasts <info | set | reload> <messageinterval | commandinterval | prefix> <message>");
                             break;
                     }
                     break;
@@ -110,7 +132,7 @@ class BlazinBroadcasts extends PluginBase{
                     $sender->sendMessage(self::PREFIX . TextFormat::GREEN . "BlazinBroadcasts successfully reloaded");
                     break;
                 default:
-                    $sender->sendMessage(self::PREFIX . TextFormat::GRAY . "Usage: /blazinbroadcasts <info | set | reload> <interval | prefix> <message>");
+                    $sender->sendMessage(self::PREFIX . TextFormat::GRAY . "Usage: /blazinbroadcasts <info | set | reload> <messageinterval | commandinterval | prefix> <message>");
                     break;
             }
         }
