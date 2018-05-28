@@ -45,23 +45,25 @@ class BlazinBroadcasts extends PluginBase{
     }
 
     private function messageIntegerCheck() : bool{
-        if(is_integer($this->getConfig()->get("message_interval"))){
-            $this->getServer()->getScheduler()->scheduleRepeatingTask(new BroadcastTask($this), $this->getConfig()->get("message_interval") * 20);
-        }else{
-            $this->getLogger()->error(TextFormat::RED . "Please enter an integer for the message interval! Plugin Disabling...");
+        if(!is_integer($this->getConfig()->get("message_interval"))){
+            $this->getLogger()->error(TextFormat::RED . "Please enter a number for the message interval! Plugin Disabling...");
             $this->getPluginLoader()->disablePlugin($this);
             return false;
+        }elseif(is_integer($this->getConfig()->get("message_interval"))){
+            $this->getServer()->getScheduler()->scheduleRepeatingTask(new BroadcastTask($this), $this->getConfig()->get("message_interval") * 20);
+            return true;
         }
         return true;
     }
 
     private function commandIntegerCheck() : bool{
-        if(is_integer($this->getConfig()->get("command_interval"))){
-            $this->getServer()->getScheduler()->scheduleRepeatingTask(new CommandTask($this), $this->getConfig()->get("command_interval") * 20);
-        }else{
+        if(!is_integer($this->getConfig()->get("command_interval"))){
             $this->getLogger()->error(TextFormat::RED . "Please enter an integer for the command interval! Plugin Disabling...");
             $this->getPluginLoader()->disablePlugin($this);
             return false;
+        }elseif(is_integer($this->getConfig()->get("command_interval"))){
+            $this->getServer()->getScheduler()->scheduleRepeatingTask(new CommandTask($this), $this->getConfig()->get("command_interval") * 20);
+            return true;
         }
         return true;
     }
