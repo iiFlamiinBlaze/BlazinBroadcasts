@@ -22,32 +22,28 @@ declare(strict_types=1);
 namespace iiFlamiinBlaze\BlazinBroadcasts;
 
 use pocketmine\command\ConsoleCommandSender;
-use pocketmine\scheduler\PluginTask;
+use pocketmine\scheduler\Task;
 
-class CommandTask extends PluginTask{
+class CommandTask extends Task{
 
-    public function __construct(BlazinBroadcasts $main){
-        parent::__construct($main);
-    }
-
-    public function onRun(int $tick) : void{
-        foreach(BlazinBroadcasts::getInstance()->getConfig()->get("commands") as $command){
-            $command = str_replace(array(
-                "&",
-                "{line}",
-                "{max_players}",
-                "{online_players}",
-                "{tps}",
-                "{motd}"
-            ), array(
-                "§",
-                "\n",
-                BlazinBroadcasts::getInstance()->getServer()->getMaxPlayers(),
-                count(BlazinBroadcasts::getInstance()->getServer()->getOnlinePlayers()),
-                BlazinBroadcasts::getInstance()->getServer()->getTicksPerSecond(),
-                BlazinBroadcasts::getInstance()->getServer()->getMotd()
-            ), $command);
-            BlazinBroadcasts::getInstance()->getServer()->dispatchCommand(new ConsoleCommandSender(), $command);
-        }
-    }
+	public function onRun(int $tick) : void{
+		foreach(BlazinBroadcasts::getInstance()->getConfig()->get("commands") as $command){
+			$command = str_replace(array(
+				"&",
+				"{line}",
+				"{max_players}",
+				"{online_players}",
+				"{tps}",
+				"{motd}"
+			), array(
+				"§",
+				"\n",
+				BlazinBroadcasts::getInstance()->getServer()->getMaxPlayers(),
+				count(BlazinBroadcasts::getInstance()->getServer()->getOnlinePlayers()),
+				BlazinBroadcasts::getInstance()->getServer()->getTicksPerSecond(),
+				BlazinBroadcasts::getInstance()->getServer()->getMotd()
+			), $command);
+			BlazinBroadcasts::getInstance()->getServer()->dispatchCommand(new ConsoleCommandSender(), $command);
+		}
+	}
 }

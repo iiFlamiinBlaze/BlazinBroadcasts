@@ -21,34 +21,29 @@ declare(strict_types=1);
 
 namespace iiFlamiinBlaze\BlazinBroadcasts;
 
-use pocketmine\command\ConsoleCommandSender;
-use pocketmine\scheduler\PluginTask;
+use pocketmine\scheduler\Task;
 
-class BroadcastTask extends PluginTask{
+class BroadcastTask extends Task{
 
-    public function __construct(BlazinBroadcasts $main){
-        parent::__construct($main);
-    }
-
-    public function onRun(int $tick) : void{
-        $messages = BlazinBroadcasts::getInstance()->getConfig()->get("messages");
-        $message = $messages[array_rand($messages)];
-        $message = str_replace(array(
-            "&",
-            "{line}",
-            "{max_players}",
-            "{online_players}",
-            "{tps}",
-            "{motd}"
-        ), array(
-            "§",
-            "\n",
-            BlazinBroadcasts::getInstance()->getServer()->getMaxPlayers(),
-            count(BlazinBroadcasts::getInstance()->getServer()->getOnlinePlayers()),
-            BlazinBroadcasts::getInstance()->getServer()->getTicksPerSecond(),
-            BlazinBroadcasts::getInstance()->getServer()->getMotd()
-        ), $message);
-        $prefix = str_replace("&", "§", BlazinBroadcasts::getInstance()->getConfig()->get("prefix"));
-        BlazinBroadcasts::getInstance()->getServer()->broadcastMessage($prefix . $message);
-    }
+	public function onRun(int $tick) : void{
+		$messages = BlazinBroadcasts::getInstance()->getConfig()->get("messages");
+		$message = $messages[array_rand($messages)];
+		$message = str_replace(array(
+			"&",
+			"{line}",
+			"{max_players}",
+			"{online_players}",
+			"{tps}",
+			"{motd}"
+		), array(
+			"§",
+			"\n",
+			BlazinBroadcasts::getInstance()->getServer()->getMaxPlayers(),
+			count(BlazinBroadcasts::getInstance()->getServer()->getOnlinePlayers()),
+			BlazinBroadcasts::getInstance()->getServer()->getTicksPerSecond(),
+			BlazinBroadcasts::getInstance()->getServer()->getMotd()
+		), $message);
+		$prefix = str_replace("&", "§", BlazinBroadcasts::getInstance()->getConfig()->get("prefix"));
+		BlazinBroadcasts::getInstance()->getServer()->broadcastMessage($prefix . $message);
+	}
 }
