@@ -17,6 +17,7 @@
 #    prefix: "&bBlazinBroadcasts &6> "
 #    message_interval: 60
 #    command_interval: 60
+#    commands: on
 #    messages:
 #     - "&bBlazinBroadcasts &aby &6BlazeTheDev"
 #     - "2nd Message"
@@ -32,6 +33,9 @@ message_interval: 60
 
 # The below config is the number of seconds in between all of the commands running
 command_interval: 60
+
+# The below config turns on command support (OPTIONS: on and off)
+commands: on
 
 # The below config are the messages that will be sent in-game (NOTE: You can use any of the variables that are described above)
 messages:

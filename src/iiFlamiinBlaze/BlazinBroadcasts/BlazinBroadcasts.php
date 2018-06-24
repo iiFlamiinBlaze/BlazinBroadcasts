@@ -29,7 +29,7 @@ use pocketmine\utils\TextFormat;
 
 class BlazinBroadcasts extends PluginBase{
 
-	const VERSION = "v1.0.2";
+	const VERSION = "v1.0.3";
 	const PREFIX = TextFormat::AQUA . "BlazinBroadcasts" . TextFormat::GOLD . " > ";
 
 	/** @var self $instance */
@@ -57,13 +57,18 @@ class BlazinBroadcasts extends PluginBase{
 	}
 
 	private function commandIntegerCheck() : bool{
-		if(!is_integer($this->getConfig()->get("command_interval"))){
-			$this->getLogger()->error(TextFormat::RED . "Please enter an integer for the command interval! Plugin Disabling...");
-			$this->getServer()->getPluginManager()->disablePlugin($this);
+		if($this->getConfig()->get("commands") === "on"){
+			if(!is_integer($this->getConfig()->get("command_interval"))){
+				$this->getLogger()->error(TextFormat::RED . "Please enter an integer for the command interval! Plugin Disabling...");
+				$this->getServer()->getPluginManager()->disablePlugin($this);
+				return false;
+			}elseif(is_integer($this->getConfig()->get("command_interval"))){
+				$this->getScheduler()->scheduleRepeatingTask(new CommandTask(), $this->getConfig()->get("command_interval") * 20);
+				return true;
+			}
+		}elseif($this->getConfig()->get("commands") !== "on"){
+			$this->getLogger()->error("Turning off command support, as it is off in the config!");
 			return false;
-		}elseif(is_integer($this->getConfig()->get("command_interval"))){
-			$this->getScheduler()->scheduleRepeatingTask(new CommandTask(), $this->getConfig()->get("command_interval") * 20);
-			return true;
 		}
 		return true;
 	}

@@ -1,5 +1,5 @@
 name: BlazinBroadcasts
-version: 1.0.2
+version: 1.0.3
 main: iiFlamiinBlaze\BlazinBroadcasts\BlazinBroadcasts
 api: 3.0.0
 description: An advanced auto broadcasting plugin for PocketMine
